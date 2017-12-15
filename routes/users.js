@@ -1,17 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/User");
-// const riley = new User({
-//   name: "Riley",
-//   username: "rilddey",
-//   password: "hello123"
-// });
-
-// riley.save(function(err) {
-//   if (err) throw err;
-
-//   console.log("User saved successfully!");
-// });
 
 function indexUsers(req, res, next) {
   User.find({}).then(users => {
