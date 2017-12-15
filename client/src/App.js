@@ -11,23 +11,32 @@ import Users from "./components/Users";
 import Page404 from "./components/Page404";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import NavBar from "./components/NavBar";
+import PrivateRoute from "./components/PrivateRoute";
+import SecretZone from "./components/SecretZone";
 
 class App extends Component {
   render() {
     return (
-      <html>
-        <head />
-        <body>
-          <BrowserRouter>
+      <BrowserRouter>
+        <html>
+          <head />
+          <body>
+            <NavBar />
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/users" component={Users} />
               <Route path="/login" component={Login} />
+              <PrivateRoute
+                path="/secret"
+                authenticated={false}
+                component={SecretZone}
+              />
               <Route path="*" component={Page404} />
             </Switch>
-          </BrowserRouter>
-        </body>
-      </html>
+          </body>
+        </html>
+      </BrowserRouter>
     );
   }
 }
