@@ -6,8 +6,14 @@ var mongoose = require("mongoose");
 
 var usersRoutes = require("./routes/users");
 var dogsRoutes = require("./routes/dogs");
+require("dotenv").config({ path: "variables.env" });
 
-mongoose.connect("mongodb://localhost/basic-react-express-database");
+// Connect and handle connection errors
+mongoose.connect(process.env.DATABASE);
+mongoose.Promise = global.Promise;
+mongoose.connection.on("error", err => {
+  console.error(err.message);
+});
 
 var app = express();
 app.use(bodyParser.json());
