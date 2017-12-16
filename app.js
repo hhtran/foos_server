@@ -3,9 +3,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var mongoose = require("mongoose");
-
-var usersRoutes = require("./routes/users");
-var dogsRoutes = require("./routes/dogs");
+var routes = require("./routes");
 require("dotenv").config({ path: "variables.env" });
 
 // Connect and handle connection errors
@@ -30,8 +28,7 @@ app.use((req, res, next) => {
 });
 
 /* Register routes */
-app.use("/api/users", usersRoutes);
-app.use("/api", dogsRoutes);
+app.use("/api", routes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
