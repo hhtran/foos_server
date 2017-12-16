@@ -22,6 +22,13 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use((req, res, next) => {
+  const { method, url } = req;
+  console.log(`Request received: ${method} ${url}`);
+
+  next();
+});
+
 /* Register routes */
 app.use("/api/users", usersRoutes);
 app.use("/api", dogsRoutes);
