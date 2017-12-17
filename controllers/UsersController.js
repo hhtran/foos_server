@@ -1,4 +1,5 @@
-var User = require("../models/User");
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
 
 function indexUsers(req, res, next) {
   User.find({}).then(users => {
