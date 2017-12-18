@@ -7,7 +7,8 @@ import {
   Link,
   BrowserRouter
 } from "react-router-dom";
-import Users from "./components/Users";
+import UsersIndex from "./components/users/UsersIndex";
+import UserProfile from "./components/users/UserProfile";
 import Page404 from "./components/Page404";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -25,7 +26,8 @@ class App extends Component {
             <NavBar />
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/users" component={Users} />
+              <Route path="/users" exact component={UsersIndex} />
+              <Route path="/users/:username" component={UserProfile} />
               <Route path="/login" component={Login} />
               <PrivateRoute
                 path="/secret"

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 
-export default class Users extends Component {
+export default class UsersIndex extends Component {
   componentDidMount() {
     fetch("/api/users")
       .then(res => res.json())
