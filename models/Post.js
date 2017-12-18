@@ -9,6 +9,7 @@ const postSchema = new Schema({
   },
   title: String,
   description: String,
+  photo: String,
   created_at: Date,
   updated_at: Date
 });

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 
-const Post = ({ _id, title, description }) => {
+const Post = ({ _id, title, description, photo }) => {
   return (
     <div>
       <div>Id: {_id}</div>
       <div>Title: {title}</div>
       <div>Description: {description}</div>
+      {photo && <img src={`/uploads/${photo}`} />}
     </div>
   );
 };

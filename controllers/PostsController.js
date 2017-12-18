@@ -22,16 +22,6 @@ async function indexPosts(req, res, next) {
   res.json(Posts);
 }
 
-async function createPost(req, res, next) {
-  const { owner, title, description } = req.body;
-  console.log(req);
-  const post = new Post({ owner, title, description });
-
-  await post.save();
-  res.status(200);
-  res.json(`Successfully saved Post ${post}`);
-}
-
 const uploadPost = multer(multerOptions).single("photo");
 const resizeImage = async (req, res, next) => {
   console.log(req.file);
@@ -48,6 +38,16 @@ const resizeImage = async (req, res, next) => {
   await photo.write(`client/public/uploads/${req.body.photo}`);
   next();
 };
+
+async function createPost(req, res, next) {
+  const { owner, title, description, photo } = req.body;
+  console.log(req);
+  const post = new Post({ owner, title, description, photo });
+
+  await post.save();
+  res.status(200);
+  res.json(`Successfully saved Post ${post}`);
+}
 
 async function showPost(req, res, next) {
   const id = req.params.id;
