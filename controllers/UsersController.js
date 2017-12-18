@@ -10,18 +10,16 @@ function indexUsers(req, res, next) {
 function createUser(req, res, next) {
   const { name, username, password } = req.body;
   const user = new User({ name, username, password });
-  user
-    .save()
-    .then(() => {
-      res.status = 200;
-      res.json(`Successfully saved user ${username}`);
-    })
-    .catch(logError(res));
+
+  return user.save().then(() => {
+    res.status = 200;
+    res.json(`Successfully saved user ${username}`);
+  });
 }
 
 function showUser(req, res, next) {
   const username = req.params.username;
-  User.findOne({ username }, logError(res)).then(user => {
+  return User.findOne({ username }).then(user => {
     res.json(user);
   });
 }
@@ -39,13 +37,6 @@ function deleteUser(req, res, next) {
   User.findOneAndRemove({ username }).then(user => {
     res.json(user);
   });
-}
-
-function logError(res) {
-  return res => err => {
-    res.status = 500;
-    res.json(err);
-  };
 }
 
 module.exports = {

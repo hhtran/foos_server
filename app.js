@@ -1,21 +1,20 @@
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var mongoose = require("mongoose");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 require("dotenv").config({ path: "variables.env" });
+const { productionErrors, developmentErrors } = require("./errorHandlers");
 
-// Connect and handle connection errors
+// Mongoose setup
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE);
 mongoose.connection.on("error", err => {
   console.error(err.message);
 });
-
-// Import models
 require("./models/User");
 
-var app = express();
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -30,12 +29,19 @@ app.use((req, res, next) => {
 });
 
 // Import routes
-var routes = require("./routes");
+const routes = require("./routes");
 
 // Register routes
 app.use("/api", routes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
+
+// Error logging
+if (app.get("env") === "development") {
+  app.use(developmentErrors);
+}
+
+app.use(productionErrors);
 
 module.exports = app;

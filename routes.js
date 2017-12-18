@@ -7,11 +7,12 @@ const {
   updateUser,
   deleteUser
 } = require("./controllers/UsersController");
+const { catchErrors } = require("./errorHandlers");
 
 // Users
 router.get("/users", indexUsers);
-router.post("/users", createUser);
-router.get("/users/:username", showUser);
+router.post("/users", catchErrors(createUser));
+router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", updateUser);
 router.delete("/users/:username", deleteUser);
 
