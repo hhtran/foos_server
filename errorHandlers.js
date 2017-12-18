@@ -14,15 +14,14 @@ function developmentErrors(err, req, res, next) {
       "<mark>$&</mark>"
     )
   };
-  res.status(err.status || 500);
+  res.status = err.status || 500;
   res.json(errorDetails);
 }
 
 function productionErrors(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render("error", {
-    message: err.message,
-    error: {}
+  res.status = err.status || 500;
+  res.json({
+    error: err.message
   });
 }
 

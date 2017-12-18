@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+const Post = mongoose.model("Post");
 
 async function indexUsers(req, res, next) {
   const users = await User.find({});
@@ -39,10 +40,17 @@ async function deleteUser(req, res, next) {
   res.json(user);
 }
 
+async function showUserPosts(req, res, next) {
+  const username = req.params.username;
+  const posts = await Post.find({ owner: username });
+  res.json(posts);
+}
+
 module.exports = {
   indexUsers,
   createUser,
   showUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  showUserPosts
 };

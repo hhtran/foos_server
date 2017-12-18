@@ -5,8 +5,16 @@ const {
   createUser,
   showUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  showUserPosts
 } = require("./controllers/UsersController");
+const {
+  indexPosts,
+  createPost,
+  showPost,
+  updatePost,
+  deletePost
+} = require("./controllers/PostsController");
 const { catchErrors } = require("./errorHandlers");
 
 // Users
@@ -15,6 +23,14 @@ router.post("/users", catchErrors(createUser));
 router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", catchErrors(updateUser));
 router.delete("/users/:username", catchErrors(deleteUser));
+router.get("/users/:username/posts", catchErrors(showUserPosts));
+
+// Posts
+router.get("/posts", catchErrors(indexPosts));
+router.post("/posts", catchErrors(createPost));
+router.get("/posts/:id", catchErrors(showPost));
+router.patch("/posts.:id", catchErrors(updatePost));
+router.delete("/posts/:id", catchErrors(deletePost));
 
 // Dogs
 router.get("/dogs", function(req, res, next) {

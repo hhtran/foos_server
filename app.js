@@ -13,6 +13,7 @@ mongoose.connection.on("error", err => {
   console.error(err.message);
 });
 require("./models/User");
+require("./models/Post");
 
 const app = express();
 app.use(bodyParser.json());
