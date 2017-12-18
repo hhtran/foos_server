@@ -3,11 +3,14 @@ import logo from "../../logo.svg";
 
 export default class UsersIndex extends Component {
   async componentDidMount() {
-    const { username } = this.props.match.params;
-    const res = await fetch(`/api/users/${username}`);
-    const user = await res.json();
-    console.log(res);
-    this.setState({ user });
+    try {
+      const { username } = this.props.match.params;
+      const res = await fetch(`/api/users/${username}`);
+      const user = await res.json();
+      this.setState({ user });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   constructor(props) {

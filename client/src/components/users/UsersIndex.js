@@ -1,11 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../logo.svg";
 
 export default class UsersIndex extends Component {
-  componentDidMount() {
-    fetch("/api/users")
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+  async componentDidMount() {
+    try {
+      const res = await fetch("/api/users");
+      const users = await res.json();
+      this.setState({ users });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   constructor(props) {
@@ -21,7 +26,11 @@ export default class UsersIndex extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          {this.state.users.map(user => <div>{user.username}</div>)}
+          {this.state.users.map(user => (
+            <div>
+              <Link to={`/users/${user.username}`}>{user.username}</Link>
+            </div>
+          ))}
         </p>
       </div>
     );
