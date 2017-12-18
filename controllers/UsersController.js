@@ -1,42 +1,42 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
-function indexUsers(req, res, next) {
-  User.find({}).then(users => {
-    res.json(users);
-  });
+async function indexUsers(req, res, next) {
+  const users = await User.find({});
+  res.json(users);
 }
 
-function createUser(req, res, next) {
+async function createUser(req, res, next) {
   const { name, username, password } = req.body;
   const user = new User({ name, username, password });
 
-  return user.save().then(() => {
-    res.status = 200;
-    res.json(`Successfully saved user ${username}`);
-  });
+  await user.save();
+  res.status = 200;
+  res.json(`Successfully saved user ${username}`);
 }
 
-function showUser(req, res, next) {
+async function showUser(req, res, next) {
   const username = req.params.username;
-  return User.findOne({ username }).then(user => {
-    res.json(user);
-  });
+  const user = await User.findOne({ username });
+  res.json(user);
 }
 
-function updateUser(req, res, next) {
+async function updateUser(req, res, next) {
   const username = req.params.username;
   const { name, password } = req.body;
-  User.findOneAndUpdate({ username }, { name, password }).then(user => {
-    res.json(user);
-  });
+  const user = await User.findOneAndUpdate(
+    { username },
+    { name, password },
+    { new: true, runValidators: true } // Important because valdiations are run only on creation by default
+  );
+
+  res.json(user);
 }
 
-function deleteUser(req, res, next) {
+async function deleteUser(req, res, next) {
   const username = req.params.username;
-  User.findOneAndRemove({ username }).then(user => {
-    res.json(user);
-  });
+  const user = await User.findOneAndRemove({ username });
+  res.json(user);
 }
 
 module.exports = {

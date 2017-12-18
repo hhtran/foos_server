@@ -10,11 +10,11 @@ const {
 const { catchErrors } = require("./errorHandlers");
 
 // Users
-router.get("/users", indexUsers);
+router.get("/users", catchErrors(indexUsers));
 router.post("/users", catchErrors(createUser));
 router.get("/users/:username", catchErrors(showUser));
-router.patch("/users/:username", updateUser);
-router.delete("/users/:username", deleteUser);
+router.patch("/users/:username", catchErrors(updateUser));
+router.delete("/users/:username", catchErrors(deleteUser));
 
 // Dogs
 router.get("/dogs", function(req, res, next) {
