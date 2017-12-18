@@ -13,7 +13,9 @@ const {
   createPost,
   showPost,
   updatePost,
-  deletePost
+  deletePost,
+  uploadPost,
+  resizeImage
 } = require("./controllers/PostsController");
 const { catchErrors } = require("./errorHandlers");
 
@@ -27,7 +29,12 @@ router.get("/users/:username/posts", catchErrors(showUserPosts));
 
 // Posts
 router.get("/posts", catchErrors(indexPosts));
-router.post("/posts", catchErrors(createPost));
+router.post(
+  "/posts",
+  uploadPost,
+  catchErrors(resizeImage),
+  catchErrors(createPost)
+);
 router.get("/posts/:id", catchErrors(showPost));
 router.patch("/posts.:id", catchErrors(updatePost));
 router.delete("/posts/:id", catchErrors(deletePost));

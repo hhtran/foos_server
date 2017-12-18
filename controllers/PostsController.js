@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 const Post = mongoose.model("Post");
+const multer = require("multer");
+const jimp = require("jimp");
+const uuid = require("uuid");
+
+const multerOptions = {
+  storage: multer.memoryStorage(),
+  fileFilter(req, file, next) {
+    console.log(file);
+    const isPhoto = file.mimetype.startsWith("image/png");
+    if (isPhoto) {
+      next(null, true);
+    } else {
+      next({ message: "File type not allowed" });
+    }
+  }
+};
 
 async function indexPosts(req, res, next) {
   const Posts = await Post.find({});
@@ -8,12 +24,30 @@ async function indexPosts(req, res, next) {
 
 async function createPost(req, res, next) {
   const { owner, title, description } = req.body;
+  console.log(req);
   const post = new Post({ owner, title, description });
 
   await post.save();
   res.status(200);
   res.json(`Successfully saved Post ${post}`);
 }
+
+const uploadPost = multer(multerOptions).single("photo");
+const resizeImage = async (req, res, next) => {
+  console.log(req.file);
+  if (!req.file) {
+    next();
+    return;
+  }
+
+  const extension = req.file.mimetype.split("/")[1];
+  req.body.photo = `${uuid.v4()}.${extension}`;
+
+  const photo = await jimp.read(req.file.buffer);
+  await photo.resize(800, jimp.AUTO);
+  await photo.write(`client/public/uploads/${req.body.photo}`);
+  next();
+};
 
 async function showPost(req, res, next) {
   const id = req.params.id;
@@ -44,5 +78,7 @@ module.exports = {
   createPost,
   showPost,
   updatePost,
-  deletePost
+  deletePost,
+  uploadPost,
+  resizeImage
 };

@@ -12,21 +12,17 @@ export default class PostCreate extends Component {
     e.preventDefault();
 
     const formData = new FormData();
-    // formData.append("title", this.state.title);
-    // formData.append("description", this.state.description);
-    // formData.append("owner", "rileyaaaaewf");
-    const body = {
-      title: this.state.title,
-      description: this.state.description,
-      owner: "rileyaaaaewf"
-    };
+    formData.append("title", this.state.title);
+    formData.append("description", this.state.description);
+    formData.append("owner", "rileyaaaaewf");
+    formData.append("photo", this.state.files[0]);
+
     fetch("/api/posts", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: "multipart/form-data"
       },
-      body: JSON.stringify(body)
+      body: formData
     });
   }
 
@@ -41,6 +37,17 @@ export default class PostCreate extends Component {
             type="title"
             name="title"
             placeholder="Title e.g. My Vacation Adventure"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            type="file"
+            onChange={e => {
+              console.log(e.target.files);
+              this.setState({ files: e.target.files });
+            }}
+            name="photo"
+            accept="image/gif, image/png, image/jpeg"
           />
         </FormGroup>
         <FormGroup>
