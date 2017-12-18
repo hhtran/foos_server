@@ -34,9 +34,6 @@ const routes = require("./routes");
 
 // Register routes
 app.use("/api", routes);
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
 
 // Error logging
 if (app.get("env") === "development") {
@@ -44,5 +41,9 @@ if (app.get("env") === "development") {
 }
 
 app.use(productionErrors);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 module.exports = app;

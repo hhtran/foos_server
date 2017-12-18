@@ -11,7 +11,7 @@ async function createPost(req, res, next) {
   const post = new Post({ owner, title, description });
 
   await post.save();
-  res.status = 200;
+  res.status(200);
   res.json(`Successfully saved Post ${post}`);
 }
 

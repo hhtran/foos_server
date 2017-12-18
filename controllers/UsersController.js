@@ -12,7 +12,7 @@ async function createUser(req, res, next) {
   const user = new User({ name, username, password });
 
   await user.save();
-  res.status = 200;
+  res.status(200);
   res.json(`Successfully saved user ${username}`);
 }
 
