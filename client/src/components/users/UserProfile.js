@@ -1,16 +1,27 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 
+const Post = ({ _id, title, description }) => {
+  return (
+    <div>
+      <div>Id: {_id}</div>
+      <div>Title: {title}</div>
+      <div>Description: {description}</div>
+    </div>
+  );
+};
+
 export default class UsersIndex extends Component {
   async componentDidMount() {
     try {
       const { username } = this.props.match.params;
-      const [userRes, postsRes] = await Promise.all(
+      const [userRes, postsRes] = await Promise.all([
         fetch(`/api/users/${username}`),
         fetch(`/api/users/${username}/posts`)
-      );
+      ]);
       const user = await userRes.json();
       const posts = await postsRes.json();
+      console.log(posts);
       this.setState({ user, posts });
     } catch (e) {
       console.error(e);
@@ -33,7 +44,7 @@ export default class UsersIndex extends Component {
         </header>
         <p className="App-intro">Username: {user && user.username}</p>
         <p className="App-intro">Name: {user && user.name}</p>
-        <div>Posts: {posts.map(post => <div>{post && post._id}</div>)}</div>
+        <div>Posts: {posts.map(post => <Post {...post} />)}</div>
       </div>
     );
   }

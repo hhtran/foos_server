@@ -7,6 +7,8 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+  title: String,
+  description: String,
   created_at: Date,
   updated_at: Date
 });

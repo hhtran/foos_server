@@ -7,8 +7,8 @@ async function indexPosts(req, res, next) {
 }
 
 async function createPost(req, res, next) {
-  const { owner } = req.body;
-  const post = new Post({ owner });
+  const { owner, title, description } = req.body;
+  const post = new Post({ owner, title, description });
 
   await post.save();
   res.status = 200;
@@ -23,10 +23,10 @@ async function showPost(req, res, next) {
 
 async function updatePost(req, res, next) {
   const id = req.params.id;
-  const { owner } = req.body;
+  const { owner, title, description } = req.body;
   const post = await Post.findOneAndUpdate(
     { _id },
-    { owner },
+    { owner, title, description },
     { new: true, runValidators: true } // Important because valdiations are run only on creation by default
   );
 
