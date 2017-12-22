@@ -16,7 +16,7 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    fetch("/api/login", {
+    fetch("/api/users/login", {
       method: "POST",
       headers: {
         Accept: "application/json",

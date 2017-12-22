@@ -22,7 +22,9 @@ const { loginUser } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
 // Users
-router.post("/users/login", catchErrors(loginUser));
+router.post("/users/login", loginUser, (req, res, next) => {
+  res.json(req.user);
+});
 router.post(
   "/users/register",
   validateRegistration,
