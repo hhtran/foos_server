@@ -28,6 +28,7 @@ function validateRegistration(req, res, next) {
     .checkBody("password-confirm", "Your passwords do not match")
     .equals(req.body.password);
 
+  console.log(req.body);
   const errors = req.validationErrors();
   if (errors) {
     res.status(500);
@@ -35,10 +36,11 @@ function validateRegistration(req, res, next) {
     return;
   }
 
-  // next();
+  next();
 }
 
 async function registerUser(req, res, next) {
+  console.log(req.body);
   res.json("hello");
 }
 

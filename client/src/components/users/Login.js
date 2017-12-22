@@ -11,16 +11,18 @@ export default class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("password", this.state.password);
+    const body = {
+      username: this.state.username,
+      password: this.state.password
+    };
 
     fetch("/api/login", {
       method: "POST",
       headers: {
-        Accept: "multipart/form-data"
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
-      body: formData
+      body: JSON.stringify(body)
     });
   }
 

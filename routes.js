@@ -23,8 +23,8 @@ const {
 const { catchErrors } = require("./errorHandlers");
 
 // Users
-router.post("/login", catchErrors(loginUser));
-router.post("/register", validateRegistration, catchErrors(registerUser));
+router.post("/users/login", catchErrors(loginUser));
+router.post("/users/register", validateRegistration, catchErrors(registerUser));
 router.get("/users", catchErrors(indexUsers));
 router.post("/users", catchErrors(createUser));
 router.get("/users/:username", catchErrors(showUser));

@@ -17,19 +17,21 @@ export default class Register extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("email", this.state.email);
-    formData.append("password", this.state.password);
-    formData.append("password-confirm", this.state.confirmPassword);
-    formData.append("name", this.state.name);
+    const body = {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+      "password-confirm": this.state.confirmPassword,
+      name: this.state.name
+    };
 
-    fetch("/api/register", {
+    fetch("/api/users/register", {
       method: "POST",
       headers: {
-        Accept: "multipart/form-data"
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
-      body: formData
+      body: JSON.stringify(body)
     });
   }
 
