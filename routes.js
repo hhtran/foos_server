@@ -5,7 +5,6 @@ const {
   showUser,
   updateUser,
   deleteUser,
-  loginUser,
   validateRegistration,
   registerUser,
   showUserPosts
@@ -19,11 +18,20 @@ const {
   uploadPost,
   resizeImage
 } = require("./controllers/PostsController");
+const { loginUser } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
 // Users
 router.post("/users/login", catchErrors(loginUser));
-router.post("/users/register", validateRegistration, catchErrors(registerUser));
+router.post(
+  "/users/register",
+  validateRegistration,
+  catchErrors(registerUser),
+  loginUser,
+  (req, res, next) => {
+    res.json(req.user);
+  }
+);
 router.get("/users", catchErrors(indexUsers));
 router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", catchErrors(updateUser));

@@ -42,13 +42,12 @@ function validateRegistration(req, res, next) {
 
 async function registerUser(req, res, next) {
   const { name, username, password, email } = req.body;
-  const user = new User({ name, username, password, email });
+  const user = new User({ name, username, email });
 
   const registerPromise = promisify(User.register, User);
   registerPromise(user, password);
   await registerPromise(user, password);
 
-  res.send("it works");
   next();
 }
 
@@ -65,10 +64,10 @@ async function showUser(req, res, next) {
 
 async function updateUser(req, res, next) {
   const username = req.params.username;
-  const { name, password, email } = req.body;
+  const { name, email } = req.body;
   const user = await User.findOneAndUpdate(
     { username },
-    { name, password, email },
+    { name, email },
     { new: true, runValidators: true } // Important because valdiations are run only on creation by default
   );
 

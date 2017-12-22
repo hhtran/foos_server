@@ -26,10 +26,6 @@ const userSchema = new Schema({
     lowercase: true,
     validate: [validator.isEmail, "Invalid Email Address"]
   },
-  password: {
-    type: String,
-    required: true
-  },
   admin: Boolean,
   location: String,
   created_at: Date,
