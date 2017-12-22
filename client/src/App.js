@@ -12,6 +12,7 @@ import UsersIndex from "./components/users/UsersIndex";
 import UserProfile from "./components/users/UserProfile";
 import Page404 from "./components/Page404";
 import Login from "./components/users/Login";
+import Logout from "./components/users/Logout";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -32,6 +33,7 @@ class App extends Component {
               <Route path="/users/:username" component={UserProfile} />
               <Route path="/posts/new" component={PostCreate} />
               <Route path="/login" component={Login} />
+              <Route path="/logout" component={Logout} />
               <Route path="/register" component={Register} />
               <PrivateRoute
                 path="/secret"

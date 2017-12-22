@@ -18,7 +18,10 @@ const {
   uploadPost,
   resizeImage
 } = require("./controllers/PostsController");
-const { loginUser } = require("./controllers/AuthenticationController");
+const {
+  loginUser,
+  logoutUser
+} = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
 // Users
@@ -35,6 +38,7 @@ router.post(
   }
 );
 router.get("/users", catchErrors(indexUsers));
+router.get("/users/logout", logoutUser);
 router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", catchErrors(updateUser));
 router.delete("/users/:username", catchErrors(deleteUser));
