@@ -2,14 +2,54 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Post = mongoose.model("Post");
 
+// Middleware
+function validateRegistration(req, res, next) {
+  req.sanitizeBody("name");
+  req.sanitizeBody("username");
+  req.sanitizeBody("password");
+  req.sanitizeBody("password-confirm");
+  req.sanitizeBody("email").normalizeEmail({
+    remove_dots: false,
+    remove_extension: false,
+    gmail_remove_subaddress: false
+  });
+
+  req.checkBody("name", "You must supply a name").notEmpty();
+  req.checkBody("username", "You must supply a username").notEmpty();
+  req
+    .checkBody("email", "That email is not valid")
+    .notEmpty()
+    .isEmail();
+  req.checkBody("password", "Password cannot be blank").notEmpty();
+  req
+    .checkBody("password-confirm", "Confirmed password cannot be blank")
+    .notEmpty();
+  req
+    .checkBody("password-confirm", "Your passwords do not match")
+    .equals(req.body.password);
+
+  const errors = req.validationErrors();
+  if (errors) {
+    res.status(500);
+    res.json({ errors: errors.map(err => err.msg) });
+    return;
+  }
+
+  // next();
+}
+
+async function registerUser(req, res, next) {
+  res.json("hello");
+}
+
 async function indexUsers(req, res, next) {
   const users = await User.find({});
   res.json(users);
 }
 
 async function createUser(req, res, next) {
-  const { name, username, password } = req.body;
-  const user = new User({ name, username, password });
+  const { name, username, password, email } = req.body;
+  const user = new User({ name, username, password, email });
 
   await user.save();
   res.status(200);
@@ -24,10 +64,10 @@ async function showUser(req, res, next) {
 
 async function updateUser(req, res, next) {
   const username = req.params.username;
-  const { name, password } = req.body;
+  const { name, password, email } = req.body;
   const user = await User.findOneAndUpdate(
     { username },
-    { name, password },
+    { name, password, email },
     { new: true, runValidators: true } // Important because valdiations are run only on creation by default
   );
 
@@ -52,5 +92,7 @@ module.exports = {
   showUser,
   updateUser,
   deleteUser,
-  showUserPosts
+  showUserPosts,
+  validateRegistration,
+  registerUser
 };

@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const expressValidator = require("express-validator");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -16,6 +17,7 @@ require("./models/User");
 require("./models/Post");
 
 const app = express();
+app.use(expressValidator());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

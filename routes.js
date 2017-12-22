@@ -6,6 +6,9 @@ const {
   showUser,
   updateUser,
   deleteUser,
+  loginUser,
+  validateRegistration,
+  registerUser,
   showUserPosts
 } = require("./controllers/UsersController");
 const {
@@ -20,6 +23,8 @@ const {
 const { catchErrors } = require("./errorHandlers");
 
 // Users
+router.post("/login", catchErrors(loginUser));
+router.post("/register", validateRegistration, catchErrors(registerUser));
 router.get("/users", catchErrors(indexUsers));
 router.post("/users", catchErrors(createUser));
 router.get("/users/:username", catchErrors(showUser));
@@ -38,17 +43,5 @@ router.post(
 router.get("/posts/:id", catchErrors(showPost));
 router.patch("/posts.:id", catchErrors(updatePost));
 router.delete("/posts/:id", catchErrors(deletePost));
-
-// Dogs
-router.get("/dogs", function(req, res, next) {
-  res.json([
-    {
-      username: "bit la"
-    },
-    {
-      username: "casey"
-    }
-  ]);
-});
 
 module.exports = router;

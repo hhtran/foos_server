@@ -11,11 +11,12 @@ import PostCreate from "./components/posts/PostCreate";
 import UsersIndex from "./components/users/UsersIndex";
 import UserProfile from "./components/users/UserProfile";
 import Page404 from "./components/Page404";
-import Login from "./components/Login";
+import Login from "./components/users/Login";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import SecretZone from "./components/SecretZone";
+import Register from "./components/users/Register";
 
 class App extends Component {
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
               <Route path="/users/:username" component={UserProfile} />
               <Route path="/posts/new" component={PostCreate} />
               <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
               <PrivateRoute
                 path="/secret"
                 authenticated={false}

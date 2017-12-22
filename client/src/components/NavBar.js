@@ -8,6 +8,7 @@ export default class NavBar extends Component {
         <Link to="/">Home</Link>
         <Link to="/users">Users</Link>
         <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
         <Link to="/secret">Secret</Link>
         <Link to="/posts/new">Create a New Post</Link>
       </div>

@@ -1,13 +1,30 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const validator = require("validator");
 mongoose.Promise = global.Promise;
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
+const mongodbErrorHandler = require("mongoose-mongodb-errors");
+const passportLocalMongoose = require("passport-local-mongoose");
 
-var userSchema = new Schema({
-  name: String,
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: "Please supply a name",
+    trim: true
+  },
   username: {
     type: String,
-    required: true,
-    unique: true
+    required: "Please supply a username",
+    trim: true,
+    unique: true,
+    lowercase: true
+  },
+  email: {
+    type: String,
+    trim: true,
+    required: "Please supply an email address",
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, "Invalid Email Address"]
   },
   password: {
     type: String,
@@ -21,7 +38,7 @@ var userSchema = new Schema({
 
 userSchema.pre("save", function(next) {
   // get the current date
-  var currentDate = new Date();
+  const currentDate = new Date();
 
   // change the updated_at field to current date
   this.updated_at = currentDate;
@@ -32,6 +49,9 @@ userSchema.pre("save", function(next) {
   next();
 });
 
-var User = mongoose.model("User", userSchema);
+userSchema.plugin(passportLocalMongoose, { usernameField: "username" });
+userSchema.plugin(mongodbErrorHandler);
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
