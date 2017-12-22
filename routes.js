@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 const {
   indexUsers,
-  createUser,
   showUser,
   updateUser,
   deleteUser,
@@ -26,7 +25,6 @@ const { catchErrors } = require("./errorHandlers");
 router.post("/users/login", catchErrors(loginUser));
 router.post("/users/register", validateRegistration, catchErrors(registerUser));
 router.get("/users", catchErrors(indexUsers));
-router.post("/users", catchErrors(createUser));
 router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", catchErrors(updateUser));
 router.delete("/users/:username", catchErrors(deleteUser));

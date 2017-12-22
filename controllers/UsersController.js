@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Post = mongoose.model("Post");
+const promisify = require("es6-promisify");
 
 // Middleware
 function validateRegistration(req, res, next) {
@@ -40,22 +41,20 @@ function validateRegistration(req, res, next) {
 }
 
 async function registerUser(req, res, next) {
-  console.log(req.body);
-  res.json("hello");
+  const { name, username, password, email } = req.body;
+  const user = new User({ name, username, password, email });
+
+  const registerPromise = promisify(User.register, User);
+  registerPromise(user, password);
+  await registerPromise(user, password);
+
+  res.send("it works");
+  next();
 }
 
 async function indexUsers(req, res, next) {
   const users = await User.find({});
   res.json(users);
-}
-
-async function createUser(req, res, next) {
-  const { name, username, password, email } = req.body;
-  const user = new User({ name, username, password, email });
-
-  await user.save();
-  res.status(200);
-  res.json(`Successfully saved user ${username}`);
 }
 
 async function showUser(req, res, next) {
@@ -90,7 +89,6 @@ async function showUserPosts(req, res, next) {
 
 module.exports = {
   indexUsers,
-  createUser,
   showUser,
   updateUser,
   deleteUser,
