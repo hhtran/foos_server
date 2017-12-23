@@ -20,14 +20,12 @@ const {
 } = require("./controllers/PostsController");
 const {
   loginUser,
-  logoutUser
+  logoutUser,
+  forgotPassword
 } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
 // Users
-router.post("/users/login", loginUser, (req, res, next) => {
-  res.json(req.user);
-});
 router.post(
   "/users/register",
   validateRegistration,
@@ -38,11 +36,17 @@ router.post(
   }
 );
 router.get("/users", catchErrors(indexUsers));
-router.get("/users/logout", logoutUser);
 router.get("/users/:username", catchErrors(showUser));
 router.patch("/users/:username", catchErrors(updateUser));
 router.delete("/users/:username", catchErrors(deleteUser));
 router.get("/users/:username/posts", catchErrors(showUserPosts));
+
+// Account
+router.post("/account/login", loginUser, (req, res, next) => {
+  res.json(req.user);
+});
+router.get("/account/logout", logoutUser);
+router.post("/account/forgot", forgotPassword);
 
 // Posts
 router.get("/posts", catchErrors(indexPosts));

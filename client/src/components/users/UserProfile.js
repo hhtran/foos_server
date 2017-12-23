@@ -7,7 +7,7 @@ const Post = ({ _id, title, description, photo }) => {
       <div>Id: {_id}</div>
       <div>Title: {title}</div>
       <div>Description: {description}</div>
-      {photo && <img src={`/uploads/${photo}`} />}
+      {photo && <img alt={`${title}`} src={`/uploads/${photo}`} />}
     </div>
   );
 };

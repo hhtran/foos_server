@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  BrowserRouter
-} from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import PostCreate from "./components/posts/PostCreate";
 import UsersIndex from "./components/users/UsersIndex";
 import UserProfile from "./components/users/UserProfile";

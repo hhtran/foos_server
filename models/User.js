@@ -29,7 +29,9 @@ const userSchema = new Schema({
   admin: Boolean,
   location: String,
   created_at: Date,
-  updated_at: Date
+  updated_at: Date,
+  resetPasswordToken: String,
+  resetPasswordExpiration: Date
 });
 
 userSchema.pre("save", function(next) {
