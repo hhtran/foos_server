@@ -26,12 +26,13 @@ function generateHtml(filename, options = {}) {
 
 async function send(options) {
   const html = generateHtml(options.filename, options);
+  const text = htmlToText.fromString(html);
   const mailOptions = {
     from: "No Reply <noreply@example.com",
     to: options.user.email,
     subject: options.subject,
     html,
-    text: "Fill in later"
+    text
   };
   const sendMail = promisify(transport.sendMail, transport);
   return sendMail(mailOptions);
