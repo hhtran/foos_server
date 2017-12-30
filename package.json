@@ -1,6 +1,6 @@
 {
   "name": "learnexpress",
-  "version": "0.0.0",
+  "version": "8.9.1",
   "private": true,
   "scripts": {
     "build-watch": "npx babel --watch src --out-dir build",
