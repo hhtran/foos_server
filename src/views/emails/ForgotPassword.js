@@ -9,7 +9,7 @@ const ForgotPassword = () => {
       <TBody>
         <TR>
           <TD align="center">
-            <BodyText>Hello world!!! You forgot your password</BodyText>
+            <BodyText>Hello world!!!!!! You forgot your password</BodyText>
           </TD>
         </TR>
       </TBody>

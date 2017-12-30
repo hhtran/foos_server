@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-
-var app = require("../src/app");
+require("babel-polyfill");
+var app = require("../build/app");
 var debug = require("debug")("learnexpress:server");
 var http = require("http");
 
