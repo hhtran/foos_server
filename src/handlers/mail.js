@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("html-to-text");
 const promisify = require("es6-promisify");
+const { renderTemplate } = require("oy-vey");
+const React = require("react");
 
 const transport = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -10,6 +12,18 @@ const transport = nodemailer.createTransport({
     pass: process.env.MAIL_PASS
   }
 });
+
+function generateHtml(filename, options = {}) {
+  const {
+    template,
+    title,
+    previewText
+  } = require(`${__dirname}/../views/emails/${filename}`);
+  const html = renderTemplate(template, {
+    title,
+    previewText
+  });
+}
 
 async function send(options) {
   const mailOptions = {
@@ -24,5 +38,6 @@ async function send(options) {
 }
 
 module.exports = {
-  send
+  send,
+  generateHtml
 };
