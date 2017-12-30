@@ -21,7 +21,9 @@ const {
 const {
   loginUser,
   logoutUser,
-  forgotPassword
+  forgotPassword,
+  resetPassword,
+  validResetToken
 } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
@@ -47,6 +49,8 @@ router.post("/account/login", loginUser, (req, res, next) => {
 });
 router.get("/account/logout", logoutUser);
 router.post("/account/forgot", forgotPassword);
+router.post("/account/reset/:token", catchErrors(resetPassword));
+router.get("/account/valid-reset-token", catchErrors(validResetToken));
 
 // Posts
 router.get("/posts", catchErrors(indexPosts));
@@ -57,7 +61,7 @@ router.post(
   catchErrors(createPost)
 );
 router.get("/posts/:id", catchErrors(showPost));
-router.patch("/posts.:id", catchErrors(updatePost));
+router.patch("/posts/:id", catchErrors(updatePost));
 router.delete("/posts/:id", catchErrors(deletePost));
 
 module.exports = router;

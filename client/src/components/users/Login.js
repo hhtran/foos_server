@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import httpClient from "../../handlers/httpClient";
 
 export default class Login extends Component {
   constructor(props) {
@@ -15,13 +16,11 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    fetch("/api/account/login", {
-      method: "POST",
+    httpClient.post("/api/account/login", body, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
+      }
     });
   };
 
@@ -32,13 +31,11 @@ export default class Login extends Component {
       email: this.state.forgotPassword
     };
 
-    fetch("/api/account/forgot", {
-      method: "POST",
+    httpClient.post("/api/account/forgot", body, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
+      }
     });
   };
 
