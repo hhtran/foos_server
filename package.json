@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build":
-      "npx babel --watch src --out-dir build --ignore node_modules,build",
+    "build-watch": "npx babel --watch src --out-dir build",
+    "build": "npx babel src --out-dir build",
     "start": "node ./bin/www",
     "watch": "nodemon ./bin/www",
     "heroku-postbuild":
