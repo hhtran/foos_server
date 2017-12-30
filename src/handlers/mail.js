@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("html-to-text");
 const promisify = require("es6-promisify");
-const { renderTemplate } = require("oy-vey");
+import Oy from "oy-vey";
 const React = require("react");
 
 const transport = nodemailer.createTransport({
@@ -14,23 +14,23 @@ const transport = nodemailer.createTransport({
 });
 
 function generateHtml(filename, options = {}) {
-  const {
-    template,
-    title,
-    previewText
-  } = require(`${__dirname}/../views/emails/${filename}`);
-  const html = renderTemplate(template, {
-    title,
-    previewText
+  const Template = require(`${__dirname}/../views/emails/${filename}.js`)
+    .default;
+  console.log(Template);
+  const html = Oy.renderTemplate(<Template />, {
+    title: "Hi! Zuko 1",
+    previewText: "Hello there"
   });
+  return html;
 }
 
 async function send(options) {
+  const html = generateHtml(options.filename, options);
   const mailOptions = {
     from: "No Reply <noreply@example.com",
     to: options.user.email,
     subject: options.subject,
-    html: "Fill in later",
+    html,
     text: "Fill in later"
   };
   const sendMail = promisify(transport.sendMail, transport);

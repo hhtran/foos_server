@@ -37,6 +37,7 @@ async function forgotPassword(req, res) {
 
   // TODO: send email
   await mail.send({
+    filename: "ForgotPassword",
     user,
     subject: "Password Reset",
     resetUrl
