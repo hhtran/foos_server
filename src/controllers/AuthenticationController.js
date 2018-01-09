@@ -5,7 +5,25 @@ const crypto = require("crypto");
 const promisify = require("es6-promisify");
 const mail = require("../handlers/mail");
 
-const loginUser = passport.authenticate("local");
+const loginUser = function(req, res, next) {
+  passport.authenticate("local", function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      res.status(401).json({
+        errors: ["Please log in."],
+        redirectUrl: `http://${req.headers.host}/login`
+      });
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      res.status(401).json({ redirectUrl: `http://${req.headers.host}/` });
+    });
+  })(req, res, next);
+};
 
 function logoutUser(req, res) {
   req.logout();
@@ -31,7 +49,7 @@ async function forgotPassword(req, res) {
   user.resetPasswordExpiration = Date.now() + 3600000; // 1 hr
   await user.save();
 
-  const resetUrl = `http://{req.headers.host}/account/reset/${
+  const resetUrl = `http://${req.headers.host}/account/reset/${
     user.resetPasswordToken
   }`;
 
@@ -77,7 +95,6 @@ async function confirmPasswordsMatch(req, res) {
 }
 
 async function resetPassword(req, res) {
-  debugger;
   // res.json(req.params);
   const { token } = req.params;
   const user = await User.findOne({
@@ -85,7 +102,6 @@ async function resetPassword(req, res) {
     resetPasswordExpiration: { $gt: Date.now() }
   });
 
-  debugger;
   if (!user) {
     res.status(401);
     res.json({
@@ -100,10 +116,7 @@ async function resetPassword(req, res) {
   user.resetPasswordExpiration = undefined;
   const updatedUser = await user.save();
 
-  await req.login(updatedUser);
-
-  res.status(200);
-  res.json(updatedUser);
+  res.status(403).json({ redirectUrl: "/login", user: updatedUser });
 }
 
 module.exports = {

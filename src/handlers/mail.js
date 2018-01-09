@@ -25,7 +25,6 @@ function generateHtml(filename, options = {}) {
 }
 
 async function send(options) {
-  debugger;
   const html = generateHtml(options.filename, options);
 
   const text = htmlToText.fromString(html);

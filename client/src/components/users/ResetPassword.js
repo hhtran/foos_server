@@ -18,7 +18,6 @@ export class ResetPassword extends Component {
       password: this.state.password
     };
 
-    debugger;
     const { match: { params: { token } } } = this.props;
 
     httpClient.post(`/api/account/reset/${token}`, body, {
