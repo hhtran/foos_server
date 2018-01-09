@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
+import httpClient from "../../handlers/httpClient";
 
 const Post = ({ _id, title, description, photo }) => {
   return (
@@ -12,16 +13,16 @@ const Post = ({ _id, title, description, photo }) => {
   );
 };
 
-export default class UsersIndex extends Component {
+export default class UserProfile extends Component {
   async componentDidMount() {
     try {
       const { username } = this.props.match.params;
       const [userRes, postsRes] = await Promise.all([
-        fetch(`/api/users/${username}`),
-        fetch(`/api/users/${username}/posts`)
+        httpClient.get(`/api/users/${username}`),
+        httpClient.get(`/api/users/${username}/posts`)
       ]);
-      const user = await userRes.json();
-      const posts = await postsRes.json();
+      const user = await userRes.data;
+      const posts = await postsRes.data;
       console.log(posts);
       this.setState({ user, posts });
     } catch (e) {

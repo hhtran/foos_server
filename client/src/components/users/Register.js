@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import httpClient from "../../handlers/httpClient";
 
 export default class Register extends Component {
   constructor(props) {
@@ -25,13 +26,11 @@ export default class Register extends Component {
       name: this.state.name
     };
 
-    fetch("/api/users/register", {
-      method: "POST",
+    httpClient.post("/api/users/register", body, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
+      }
     });
   }
 

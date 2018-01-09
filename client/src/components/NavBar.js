@@ -15,6 +15,9 @@ export default class NavBar extends Component {
         <Link className={css(styles.link)} to="/login">
           Login
         </Link>
+        <Link className={css(styles.link)} to="/me">
+          My Profile
+        </Link>
         <Link className={css(styles.link)} to="/logout">
           Logout
         </Link>

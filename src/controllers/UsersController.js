@@ -54,6 +54,8 @@ async function registerUser(req, res, next) {
 async function indexUsers(req, res, next) {
   const users = await User.find({});
   res.json(users);
+
+  next();
 }
 
 async function showUser(req, res, next) {

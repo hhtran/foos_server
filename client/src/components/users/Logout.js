@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import httpClient from "../../handlers/httpClient";
 
 export default class Logout extends Component {
   componentDidMount() {
-    fetch("/api/account/logout");
+    httpClient.get("/api/account/logout");
   }
 
   render() {

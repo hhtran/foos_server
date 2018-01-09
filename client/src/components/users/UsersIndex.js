@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../logo.svg";
+import httpClient from "../../handlers/httpClient";
 
 export default class UsersIndex extends Component {
   async componentDidMount() {
     try {
-      const res = await fetch("/api/users");
-      const users = await res.json();
+      const res = await httpClient.get("/api/users");
+      const users = await res.data;
       this.setState({ users });
     } catch (e) {
       console.error(e);

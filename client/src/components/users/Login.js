@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import httpClient from "../../handlers/httpClient";
+import { css, StyleSheet } from "aphrodite";
 
 export default class Login extends Component {
   constructor(props) {
@@ -41,9 +42,9 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div>
-        <Form onSubmit={this.handleLoginSubmit}>
-          Login
+      <div className={css(styles.container)}>
+        <h1>Sign in</h1>
+        <Form className={css(styles.form)} onSubmit={this.handleLoginSubmit}>
           <FormGroup>
             <Label for="username">Username</Label>
             <Input
@@ -67,17 +68,38 @@ export default class Login extends Component {
           <Button color="primary">Login</Button>
         </Form>
 
-        <Form onSubmit={this.handleForgotPasswordSubmit}>
-          <Label for="forgot-password">Forgot password?</Label>
-          <Input
-            type="email"
-            name="forgot-password"
-            onChange={e => this.setState({ forgotPassword: e.target.value })}
-          />
+        <Form
+          className={css(styles.form)}
+          onSubmit={this.handleForgotPasswordSubmit}
+        >
+          <FormGroup>
+            <Label for="forgot-password">Forgot your password?</Label>
+            <Input
+              type="email"
+              name="forgot-password"
+              onChange={e => this.setState({ forgotPassword: e.target.value })}
+            />
+          </FormGroup>
 
-          <Button color="secondary">Forgot your password?</Button>
+          <Button color="secondary">Send Password Reset Email</Button>
         </Form>
       </div>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: 50
+  },
+  form: {
+    maxWidth: "400px",
+    width: "100%",
+    margin: "20px auto",
+    display: "flex",
+    flexDirection: "column"
+  }
+});

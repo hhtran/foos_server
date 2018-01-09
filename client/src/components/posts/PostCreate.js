@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import httpClient from "../../handlers/httpClient";
 
 export default class PostCreate extends Component {
   constructor(props) {
@@ -17,12 +18,10 @@ export default class PostCreate extends Component {
     formData.append("owner", "rileyaaaaewf");
     formData.append("photo", this.state.files[0]);
 
-    fetch("/api/posts", {
-      method: "POST",
+    httpClient.post("/api/posts", formData, {
       headers: {
         Accept: "multipart/form-data"
-      },
-      body: formData
+      }
     });
   }
 
