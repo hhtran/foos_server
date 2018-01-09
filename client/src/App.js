@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import SecretZone from "./components/SecretZone";
 import Register from "./components/users/Register";
+import ResetPassword from "./components/users/ResetPassword";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/users" exact component={UsersIndex} />
               <Route path="/users/:username" component={UserProfile} />
+              <Route path="/account/reset/:token" component={ResetPassword} />
               <Route path="/posts/new" component={PostCreate} />
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />

@@ -52,7 +52,7 @@ async function validResetToken(req, res) {
   const user = await User.findOne({
     resetPasswordToken: token,
     resetPasswordExpiration: { $gt: Date.now() }
-  });
+  }).exec();
 
   if (!user) {
     res.status(401);
@@ -77,13 +77,15 @@ async function confirmPasswordsMatch(req, res) {
 }
 
 async function resetPassword(req, res) {
-  res.json(req.params);
+  debugger;
+  // res.json(req.params);
   const { token } = req.params;
   const user = await User.findOne({
     resetPasswordToken: token,
     resetPasswordExpiration: { $gt: Date.now() }
   });
 
+  debugger;
   if (!user) {
     res.status(401);
     res.json({

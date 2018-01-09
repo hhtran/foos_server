@@ -17,7 +17,7 @@ function generateHtml(filename, options = {}) {
   const Template = require(`${__dirname}/../views/emails/${filename}.js`)
     .default;
   console.log(Template);
-  const html = Oy.renderTemplate(<Template />, {
+  const html = Oy.renderTemplate(<Template {...options} />, {
     title: "Hi! Zuko 1",
     previewText: "Hello there"
   });
@@ -25,7 +25,9 @@ function generateHtml(filename, options = {}) {
 }
 
 async function send(options) {
+  debugger;
   const html = generateHtml(options.filename, options);
+
   const text = htmlToText.fromString(html);
   const mailOptions = {
     from: "No Reply <noreply@example.com",
