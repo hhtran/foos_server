@@ -6,9 +6,7 @@ const promisify = require("es6-promisify");
 const mail = require("../handlers/mail");
 
 const loginUser = function (req, res, next) {
-  debugger;
   passport.authenticate("local", function (err, user, info) {
-    debugger;
     if (err) { return next(err); }
     if (!user) {
       return res.status(401).json({
