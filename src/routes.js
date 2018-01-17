@@ -23,7 +23,8 @@ const {
   logoutUser,
   forgotPassword,
   resetPassword,
-  validResetToken
+  validResetToken,
+  isAuthenticated
 } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
@@ -44,9 +45,16 @@ router.delete("/users/:username", catchErrors(deleteUser));
 router.get("/users/:username/posts", catchErrors(showUserPosts));
 
 // Account
-router.post("/account/login", loginUser, (req, res, next) => {
+router.get("/authenticated", isAuthenticated, (req, res, next) => {
   res.json(req.user);
 });
+router.post(
+  "/account/login",
+  loginUser,
+  catchErrors((req, res, next) => {
+    res.json(req.user);
+  })
+);
 router.get("/account/logout", logoutUser);
 router.post("/account/forgot", forgotPassword);
 router.post("/account/reset/:token", catchErrors(resetPassword));

@@ -9,11 +9,11 @@ import Login from "./components/users/Login";
 import Logout from "./components/users/Logout";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
-import PrivateRoute from "./components/PrivateRoute";
 import SecretZone from "./components/SecretZone";
 import Register from "./components/users/Register";
 import ResetPassword from "./components/users/ResetPassword";
 import MyProfile from "./components/users/MyProfile";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 class App extends Component {
   render() {
@@ -32,16 +32,8 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={Register} />
-              <PrivateRoute
-                authenticated={false}
-                path="/me"
-                component={MyProfile}
-              />
-              <PrivateRoute
-                path="/secret"
-                authenticated={false}
-                component={SecretZone}
-              />
+              <AuthenticatedRoute path="/me" component={MyProfile} />
+              <AuthenticatedRoute path="/secret" component={SecretZone} />
               <Route path="*" component={Page404} />
             </Switch>
           </body>

@@ -9,9 +9,8 @@
     "build-watch": "npx babel --watch src --out-dir build",
     "build": "./node_modules/.bin/babel src --out-dir build",
     "start": "node ./bin/www",
-    "watch": "nodemon ./bin/www --inspect",
-    "heroku-postbuild":
-      "npm install --only=dev && npm install && npm run build && cd client && npm install --only=dev && npm install && npm run build"
+    "watch": "nodemon ./bin/www --inspect=9229",
+    "heroku-postbuild": "npm install --only=dev && npm install && npm run build && cd client && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -19,6 +18,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "es6-promisify": "^5.0.0",
@@ -39,6 +39,7 @@
     "passport-local-mongoose": "^4.4.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "recompose": "^0.26.0",
     "serve-favicon": "~2.4.5",
     "uuid": "^3.1.0",
     "validator": "^9.2.0"

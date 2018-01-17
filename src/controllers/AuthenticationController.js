@@ -5,22 +5,20 @@ const crypto = require("crypto");
 const promisify = require("es6-promisify");
 const mail = require("../handlers/mail");
 
-const loginUser = function(req, res, next) {
-  passport.authenticate("local", function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
+const loginUser = function (req, res, next) {
+  debugger;
+  passport.authenticate("local", function (err, user, info) {
+    debugger;
+    if (err) { return next(err); }
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         errors: ["Please log in."],
         redirectUrl: `http://${req.headers.host}/login`
       });
     }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      res.status(401).json({ redirectUrl: `http://${req.headers.host}/` });
+    req.logIn(user, function (err) {
+      if (err) { return next(err); }
+      return res.status(401).json({ redirectUrl: `http://${req.headers.host}/` });
     });
   })(req, res, next);
 };
@@ -31,9 +29,10 @@ function logoutUser(req, res) {
   res.send("Logged out");
 }
 
-function isAuthenticated(req, res) {
+function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     next();
+    return;
   }
   res.status(403).json({ errors: ["Please log in."], redirectUrl: "/login" });
 }
@@ -51,7 +50,7 @@ async function forgotPassword(req, res) {
 
   const resetUrl = `http://${req.headers.host}/account/reset/${
     user.resetPasswordToken
-  }`;
+    }`;
 
   // TODO: send email
   await mail.send({
@@ -124,5 +123,6 @@ module.exports = {
   logoutUser,
   forgotPassword,
   resetPassword,
-  validResetToken
+  validResetToken,
+  isAuthenticated
 };

@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: "variables.env" });
 const { productionErrors, developmentErrors } = require("./errorHandlers");
 const passport = require("passport");
+const cookieSession = require("cookie-session");
 
 // Mongoose setup
 mongoose.Promise = global.Promise;
@@ -20,10 +21,20 @@ require("./models/Post");
 const app = express();
 app.use(expressValidator());
 app.use(bodyParser.json());
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: [process.env.COOKIE_SESSION_SECRET],
+
+//     // Cookie Options
+//     maxAge: 24 * 60 * 60 * 1000 // 24 hours
+//   })
+// );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/../client/build")));
 app.use(passport.initialize());
+app.use(passport.session());
 require("./handlers/passport");
 
 // Logging requests
