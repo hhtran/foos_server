@@ -24,7 +24,7 @@ const {
   forgotPassword,
   resetPassword,
   validResetToken,
-  isAuthenticated
+  checkAuthenticated
 } = require("./controllers/AuthenticationController");
 const { catchErrors } = require("./errorHandlers");
 
@@ -45,7 +45,7 @@ router.delete("/users/:username", catchErrors(deleteUser));
 router.get("/users/:username/posts", catchErrors(showUserPosts));
 
 // Account
-router.get("/authenticated", isAuthenticated, (req, res, next) => {
+router.get("/authenticated", checkAuthenticated, (req, res, next) => {
   res.json(req.user);
 });
 router.post(

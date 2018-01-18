@@ -5,7 +5,6 @@ import { withState } from "recompose";
 
 class AuthenticatedRoute extends Component {
   componentDidMount() {
-    debugger;
     const { setAuthenticated, authenticated } = this.props;
     httpClient.get("/api/authenticated").then(res => {
       if (res.status === 200) {
