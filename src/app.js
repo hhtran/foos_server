@@ -21,15 +21,15 @@ require("./models/Post");
 const app = express();
 app.use(expressValidator());
 app.use(bodyParser.json());
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: [process.env.COOKIE_SESSION_SECRET],
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [process.env.COOKIE_SESSION_SECRET],
 
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000 // 24 hours
-//   })
-// );
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  })
+);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/../client/build")));

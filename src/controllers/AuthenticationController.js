@@ -6,7 +6,9 @@ const promisify = require("es6-promisify");
 const mail = require("../handlers/mail");
 
 const loginUser = function (req, res, next) {
+  debugger;
   passport.authenticate("local", function (err, user, info) {
+    debugger;
     if (err) { return next(err); }
     if (!user) {
       return res.status(401).json({
@@ -28,6 +30,7 @@ function logoutUser(req, res) {
 }
 
 function isAuthenticated(req, res, next) {
+  debugger;
   if (req.isAuthenticated()) {
     next();
     return;
