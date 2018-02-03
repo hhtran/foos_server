@@ -32,7 +32,6 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "/../client/build")));
 app.use(passport.initialize());
 app.use(passport.session());
 require("./handlers/passport");
@@ -57,9 +56,5 @@ if (app.get("env") === "development") {
 }
 
 app.use(productionErrors);
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
 
 module.exports = app;
