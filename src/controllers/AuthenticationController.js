@@ -22,10 +22,10 @@ const loginUser = function (req, res, next) {
   })(req, res, next);
 };
 
-function logoutUser(req, res) {
-  req.logout();
-  res.status(200);
-  res.send("Logged out");
+async function logoutUser(req, res) {
+  await req.logout();
+  const redirectHost = process.env.NODE_ENV === "development" ? process.env.FRONTEND_HOST : req.headers.host;
+  return res.status(401).json({ redirectUrl: `http://${redirectHost}/` });
 }
 
 function checkAuthenticated(req, res, next) {

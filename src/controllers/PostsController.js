@@ -8,7 +8,7 @@ const multerOptions = {
   storage: multer.memoryStorage(),
   fileFilter(req, file, next) {
     console.log(file);
-    const isPhoto = file.mimetype.startsWith("image/png");
+    const isPhoto = file.mimetype.startsWith("image/png") || file.mimetype.startsWith("image/jpeg");
     if (isPhoto) {
       next(null, true);
     } else {
@@ -35,7 +35,7 @@ const resizeImage = async (req, res, next) => {
 
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
-  await photo.write(`client/public/uploads/${req.body.photo}`);
+  await photo.write(`static/public/uploads/${req.body.photo}`);
   next();
 };
 

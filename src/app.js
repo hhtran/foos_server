@@ -49,6 +49,7 @@ const routes = require("./routes");
 
 // Register routes
 app.use("/api", routes);
+app.use("/api/public/uploads", express.static("public/uploads"))
 
 // Error logging
 if (app.get("env") === "development") {
