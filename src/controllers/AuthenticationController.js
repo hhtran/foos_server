@@ -16,7 +16,8 @@ const loginUser = function (req, res, next) {
     }
     req.logIn(user, function (err) {
       if (err) { return next(err); }
-      return res.status(401).json({ redirectUrl: `http://${req.headers.host}/` });
+      const redirectHost = process.env.NODE_ENV === "development" ? process.env.FRONTEND_HOST : req.headers.host;
+      return res.status(401).json({ redirectUrl: `http://${redirectHost}/` });
     });
   })(req, res, next);
 };
