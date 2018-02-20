@@ -64,12 +64,13 @@ router.get("/account/valid-reset-token", catchErrors(validResetToken));
 router.get("/posts", catchErrors(indexPosts));
 router.post(
   "/posts",
+  checkAuthenticated,
   uploadPost,
   catchErrors(resizeImage),
   catchErrors(createPost)
 );
 router.get("/posts/:id", catchErrors(showPost));
-router.patch("/posts/:id", catchErrors(updatePost));
-router.delete("/posts/:id", catchErrors(deletePost));
+router.patch("/posts/:id", , checkAuthenticated, catchErrors(updatePost));
+router.delete("/posts/:id", checkAuthenticated, catchErrors(deletePost));
 
 module.exports = router;

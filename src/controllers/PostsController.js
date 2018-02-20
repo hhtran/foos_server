@@ -8,7 +8,9 @@ const multerOptions = {
   storage: multer.memoryStorage(),
   fileFilter(req, file, next) {
     console.log(file);
-    const isPhoto = file.mimetype.startsWith("image/png") || file.mimetype.startsWith("image/jpeg");
+    const isPhoto =
+      file.mimetype.startsWith("image/png") ||
+      file.mimetype.startsWith("image/jpeg");
     if (isPhoto) {
       next(null, true);
     } else {
@@ -40,7 +42,8 @@ const resizeImage = async (req, res, next) => {
 };
 
 async function createPost(req, res, next) {
-  const { owner, title, description, photo } = req.body;
+  const { title, description, photo } = req.body;
+  const owner = req.user.username;
   console.log(req);
   const post = new Post({ owner, title, description, photo });
 
@@ -57,7 +60,8 @@ async function showPost(req, res, next) {
 
 async function updatePost(req, res, next) {
   const id = req.params.id;
-  const { owner, title, description } = req.body;
+  const { title, description } = req.body;
+  const owner = req.user.username;
   const post = await Post.findOneAndUpdate(
     { _id },
     { owner, title, description },
