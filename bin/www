@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 require("babel-polyfill");
-var app = require("../build/app");
+var app = require("../src/app");
 var debug = require("debug")("learnexpress:server");
 var http = require("http");
 

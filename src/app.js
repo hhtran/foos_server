@@ -15,21 +15,11 @@ mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("error", err => {
   console.error(err.message);
 });
-require("./models/User");
 require("./models/Post");
 
 const app = express();
 app.use(expressValidator());
 app.use(bodyParser.json());
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_SESSION_SECRET],
-
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  })
-);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());

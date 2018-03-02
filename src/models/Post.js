@@ -3,13 +3,10 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-  owner: {
+  body: {
     type: String,
     required: true
   },
-  title: String,
-  description: String,
-  photo: String,
   created_at: Date,
   updated_at: Date
 });

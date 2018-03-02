@@ -6,11 +6,8 @@
     "node": "8.9.1"
   },
   "scripts": {
-    "build-watch": "npx babel --watch src --out-dir build",
-    "build": "./node_modules/.bin/babel src --out-dir build",
     "start": "node ./bin/www",
-    "watch": "nodemon ./bin/www --inspect=9229",
-    "heroku-postbuild": "npm install --only=dev && npm install && npm run build && cd client && npm install --only=dev && npm install && npm run build"
+    "watch": "nodemon ./bin/www --inspect=9229"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
